@@ -1,0 +1,13 @@
+truename,givenname,keep,multiplier
+PT1,PT_1,true,1.0
+PT2,PT_2,true,1.0
+PT3,PT_3,true,1.0
+PT4,PT_6,true,1.0
+PT5,PT_7,true,1.0
+PT6,PT_5,true,1.0
+PT7,PT_9,true,1.0
+PT8,PT_10,true,1.0
+PT9,PT_11,true,1.0
+PT10,PT_4,true,1.0
+PT11,PT_8,false,1.0
+PT12,PT_12,false,1.0
