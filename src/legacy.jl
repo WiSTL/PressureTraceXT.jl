@@ -15,6 +15,16 @@ using GLMakie, Colors
 using Printf
 using Interpolations
 
+function filtertrace!(ptrace::PressureTrace, filter = (median_size = 15, lowpass_mul = 100, filt = Butterworth(2)))
+    freq = 1 / step(ptrace.time)
+    lowpass = digitalfilter(Lowpass(freq / filter.lowpass_mul, fs = freq), filter.filt)
+    mapcols!(ptrace.data) do s
+        s̄ = mapwindow(median, s, filter.median_size)
+        ŝ = filtfilt(lowpass, s)
+        [median((s[i], s̄[i], ŝ[i])) for i in eachindex(s)]
+    end
+end
+
 # Shock-fitting
 shockpressure(t, p0, ps, ts, R) = (ps - p0) * ((tanh(R * (t - ts)) + 1) / 2) + p0
 @. shockpressure(t, params) = shockpressure(t, params...)

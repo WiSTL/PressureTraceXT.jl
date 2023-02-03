@@ -1,13 +1,3 @@
-function filtertrace!(ptrace::PressureTrace, filter = (median_size = 15, lowpass_mul = 100, filt = Butterworth(2)))
-    freq = 1 / step(ptrace.time)
-    lowpass = digitalfilter(Lowpass(freq / filter.lowpass_mul, fs = freq), filter.filt)
-    mapcols!(ptrace.data) do s
-        s̄ = mapwindow(median, s, filter.median_size)
-        ŝ = filtfilt(lowpass, s)
-        [median((s[i], s̄[i], ŝ[i])) for i in eachindex(s)]
-    end
-end
-
 function triggerindex(ptrace::PressureTrace, trigger)
     trig_PT, thresh = trigger
     findfirst(>(thresh), ptrace.data[!, trig_PT])
